@@ -4,21 +4,21 @@ def read_config():
     config.read('./configurations.ini')
     return config
 
-from detection_helpers import *
-from tracking_helpers import *
-from bridge_wrapper import *
+from detection_helpers import Detector
+#from tracking_helpers import *
+#from bridge_wrapper import *
 from PIL import Image
 
 config=read_config()
-classes=bool(config['Detection']['classes'])
-detector = Detector(classes=classes) # it'll detect ONLY [person,horses,sports ball]. class = None means detect all classes. List info at: "data/coco.yaml"
+#classes=bool(config['Detection']['classes'])
+detector = Detector(classes=None) # it'll detect ONLY [person,horses,sports ball]. class = None means detect all classes. List info at: "data/coco.yaml"
 detector.load_model('./weights/yolov7x.pt',) # pass the path to the trained weight file
-
 
 import datetime
 import os 
-from IPython.core.interactiveshell import InteractiveShell
-InteractiveShell.ast_node_interactivity = "all" 
+import cv2
+#from IPython.core.interactiveshell import InteractiveShell
+#InteractiveShell.ast_node_interactivity = "all" 
 
 def create_file(path):
     if not os.path.exists(path):
@@ -41,7 +41,7 @@ def load_file_list(loadpath):
 #detectionsavepath=r'./detection_result/'
 config=read_config()
 detectionloadpath=config['Detection']['detectionloadpath']
-detectionsavepath=config['Detection']['detectionloadpath']
+detectionsavepath=config['Detection']['detectionsavepath']
 
 load_file_list(detectionloadpath)
 create_file(detectionsavepath)
